@@ -1,0 +1,91 @@
+// ============================================================================
+// LIGHT THEME TOKENS
+// Modern, crisp slate & indigo theme with clean contrast and subtle borders
+// ============================================================================
+
+@mixin theme-light-tokens {
+  --theme-name: 'light';
+
+  // Surface & Background Colors
+  --bg-body: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-tonal: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.82);
+  --bg-hover: #f1f5f9;
+  --bg-active: #e2e8f0;
+  --bg-disabled: #f1f5f9;
+
+  // Typography Colors
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+
+  // Border Colors
+  --border-color: #e2e8f0;
+  --border-color-subtle: #f1f5f9;
+  --border-color-focus: #4f46e5;
+  --border-glass: rgba(255, 255, 255, 0.6);
+
+  // Palette Colors
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-active: #3730a3;
+  --primary-tonal: rgba(79, 70, 229, 0.1);
+  --primary-text: #ffffff;
+
+  --secondary: #64748b;
+  --secondary-hover: #475569;
+  --secondary-active: #334155;
+  --secondary-tonal: rgba(100, 116, 139, 0.1);
+  --secondary-text: #ffffff;
+
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-tonal: rgba(79, 70, 229, 0.12);
+
+  --success: #10b981;
+  --success-hover: #059669;
+  --success-tonal: rgba(16, 185, 129, 0.1);
+  --success-text: #ffffff;
+
+  --warning: #f59e0b;
+  --warning-hover: #d97706;
+  --warning-tonal: rgba(245, 158, 11, 0.12);
+  --warning-text: #ffffff;
+
+  --danger: #f43f5e;
+  --danger-hover: #e11d48;
+  --danger-tonal: rgba(244, 63, 94, 0.1);
+  --danger-text: #ffffff;
+
+  --info: #0284c7;
+  --info-hover: #0369a1;
+  --info-tonal: rgba(2, 132, 199, 0.1);
+  --info-text: #ffffff;
+
+  --neutral: #64748b;
+  --neutral-hover: #475569;
+  --neutral-tonal: rgba(100, 116, 139, 0.08);
+  --neutral-text: #ffffff;
+
+  // Focus Ring
+  --ring-color: rgba(79, 70, 229, 0.25);
+
+  // Shadows
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.2);
+
+  // Component Overrides
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #0f172a;
+  --sidebar-active-bg: #4f46e5;
+  --navbar-bg: #ffffff;
+  --table-striped: #f8fafc;
+  --table-hover: #f1f5f9;
+  --table-header-bg: #f8fafc;
+}

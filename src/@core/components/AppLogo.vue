@@ -1,0 +1,105 @@
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  width: {
+    type: [Number, String],
+    default: 32
+  },
+  height: {
+    type: [Number, String],
+    default: null
+  },
+  color: {
+    type: String,
+    default: null
+  },
+  glowOnHover: {
+    type: Boolean,
+    default: true
+  }
+})
+
+const computedHeight = computed(() => {
+  if (props.height) return props.height
+  const numWidth = typeof props.width === 'number' ? props.width : parseFloat(props.width)
+  if (!isNaN(numWidth)) {
+    return Math.round((numWidth * 95) / 129)
+  }
+  return 'auto'
+})
+
+const customStyle = computed(() => {
+  if (!props.color) return {}
+  return {
+    '--logo-base': props.color,
+    '--logo-light': `color-mix(in srgb, ${props.color} 70%, #ffffff 30%)`,
+    '--logo-dark': `color-mix(in srgb, ${props.color} 75%, #000000 25%)`
+  }
+})
+</script>
+
+<template>
+  <svg
+    :width="width"
+    :height="computedHeight"
+    viewBox="0 0 129 95"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    :class="['jui-logo', { 'jui-logo-glow': glowOnHover }]"
+    :style="customStyle"
+    role="img"
+    aria-label="JUI Kit Logo"
+  >
+    <!-- Letter J -->
+    <path class="logo-shade-dark" d="M37 25L10.5 9.5V15.75V22L26.5 31.5V64.5V76.5L9.5 67V58L0 52.5V73L37 95V25Z"/>
+    <path class="logo-shade-base" d="M47 19L37 25V95L47 89V19Z"/>
+    <path class="logo-shade-base" d="M9.5 67L20 61.5V52.5L9.5 58V67Z"/>
+    <path class="logo-shade-light" d="M20 4L10.5 9.5L37 25L47 19L20 4Z"/>
+    <path class="logo-shade-light" d="M9.5 67L26.5 76.5V64.5L20 61.5L9.5 67Z"/>
+    <path class="logo-shade-light" d="M0 52.5L9.5 58L20 52.5L10.5 46L0 52.5Z"/>
+
+    <!-- Letter U -->
+    <path class="logo-shade-base" d="M74 31.5L64 37.5V94.5L100.5 73V6.5L90.5 12.5V67L74 77V64.5V31.5Z"/>
+    <path class="logo-shade-dark" d="M64 37.5L53.5 31.5V89L64 94.5V37.5Z"/>
+    <path class="logo-shade-dark" d="M90.5 67V12.5L80 6.5V60.5L90.5 67Z"/>
+    <path class="logo-shade-light" d="M90.5 12.5L100.5 6.5L90.5 0L80 6.5L90.5 12.5Z"/>
+    <path class="logo-shade-light" d="M64 37.5L74 31.5L64 25L53.5 31.5L64 37.5Z"/>
+    <path class="logo-shade-light" d="M74 77L90.5 67L80 60.5L74 64.5V77Z"/>
+
+    <!-- Letter I -->
+    <path class="logo-shade-dark" d="M118.5 12.5L108 6.5V71.5L118.5 78V12.5Z"/>
+    <path class="logo-shade-base" d="M129 6.5L118.5 12.5V78L129 71.5V6.5Z"/>
+    <path class="logo-shade-light" d="M108 6.5L118.5 12.5L129 6.5L118.5 0.5L108 6.5Z"/>
+  </svg>
+</template>
+
+<style scoped>
+.jui-logo {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  overflow: visible;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), filter 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-shade-dark {
+  fill: var(--logo-dark, color-mix(in srgb, var(--primary, #6366f1) 75%, #000000 25%));
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-shade-base {
+  fill: var(--logo-base, var(--primary, #6366f1));
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-shade-light {
+  fill: var(--logo-light, color-mix(in srgb, var(--primary, #6366f1) 70%, #ffffff 30%));
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.jui-logo-glow:hover {
+  filter: drop-shadow(0 2px 8px var(--primary-tonal, rgba(99, 102, 241, 0.45)));
+  transform: translateY(-1px) scale(1.03);
+}
+</style>

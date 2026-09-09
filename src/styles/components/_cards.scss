@@ -1,0 +1,176 @@
+// ============================================================================
+// COMPONENT: CARDS
+// 4 Patterns: Bordered / Flat, Elevated / Shadowed, Tonal / Filled Surface,
+//             Glassmorphic (Frosted Glass)
+// Extras: Headers, Footers, Actions, Hover animations, Media covers
+// ============================================================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+// ----------------------------------------------------------------------------
+// Base Card Structure
+// ----------------------------------------------------------------------------
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: $card-bg;
+  background-clip: border-box;
+  border: $card-border-width solid $card-border-color;
+  border-radius: $card-border-radius;
+  color: $card-text;
+  transition: $transition-base;
+  overflow: hidden;
+
+  // Interactive Hoverable Card
+  &.card-hoverable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: $shadow-xl;
+      border-color: var(--accent, #6366f1);
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------
+// 1. BORDERED / FLAT PATTERN
+// ----------------------------------------------------------------------------
+.card-bordered,
+.card-flat {
+  background-color: $bg-surface;
+  border: 1px solid $border-color;
+  box-shadow: none;
+}
+
+// ----------------------------------------------------------------------------
+// 2. ELEVATED / SHADOWED PATTERN
+// ----------------------------------------------------------------------------
+.card-elevated {
+  background-color: $bg-surface-elevated;
+  border: 1px solid $border-color-subtle;
+  box-shadow: $shadow-lg;
+
+  &:hover {
+    box-shadow: $shadow-xl;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// 3. TONAL / FILLED SURFACE PATTERN
+// ----------------------------------------------------------------------------
+.card-tonal {
+  background-color: $bg-surface-tonal;
+  border: 1px solid transparent;
+  box-shadow: none;
+
+  &:hover {
+    background-color: $bg-hover;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// 4. GLASSMORPHIC (FROSTED GLASS) PATTERN
+// ----------------------------------------------------------------------------
+.card-glass {
+  @include glassmorphism($card-glass-blur, var(--bg-glass, rgba(30, 41, 59, 0.7)), var(--border-glass, rgba(255, 255, 255, 0.12)));
+  box-shadow: $shadow-lg;
+
+  &:hover {
+    border-color: var(--accent, #6366f1);
+    box-shadow: $shadow-glow;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Card Internal Components
+// ----------------------------------------------------------------------------
+.card-header {
+  padding: $card-padding-sm $card-padding-md;
+  margin-bottom: 0;
+  background-color: transparent;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  &:first-child {
+    border-radius: calc($card-border-radius - 1px) calc($card-border-radius - 1px) 0 0;
+  }
+}
+
+.card-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin-bottom: 0;
+  line-height: $line-height-tight;
+}
+
+.card-subtitle {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: $card-padding-md;
+  color: $text-secondary;
+}
+
+.card-footer {
+  padding: $card-padding-sm $card-padding-md;
+  background-color: transparent;
+  border-top: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  &:last-child {
+    border-radius: 0 0 calc($card-border-radius - 1px) calc($card-border-radius - 1px);
+  }
+}
+
+.card-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-img-top {
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: calc($card-border-radius - 1px);
+  border-top-right-radius: calc($card-border-radius - 1px);
+}
+
+// ----------------------------------------------------------------------------
+// Card Sizing Variants
+// ----------------------------------------------------------------------------
+.card-sm {
+  .card-body {
+    padding: $card-padding-sm;
+  }
+  .card-header,
+  .card-footer {
+    padding: 0.75rem $card-padding-sm;
+  }
+}
+
+.card-lg {
+  .card-body {
+    padding: $card-padding-lg;
+  }
+  .card-header,
+  .card-footer {
+    padding: 1.25rem $card-padding-lg;
+  }
+}

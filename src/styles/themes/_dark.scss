@@ -1,0 +1,91 @@
+// ============================================================================
+// DARK THEME TOKENS
+// Sleek midnight dark theme with deep contrast, vibrant violet/indigo accents
+// ============================================================================
+
+@mixin theme-dark-tokens {
+  --theme-name: 'dark';
+
+  // Surface & Background Colors
+  --bg-body: #0b0f19;
+  --bg-surface: #111827;
+  --bg-surface-elevated: #1f293d;
+  --bg-surface-tonal: rgba(255, 255, 255, 0.04);
+  --bg-glass: rgba(17, 24, 39, 0.75);
+  --bg-hover: rgba(255, 255, 255, 0.06);
+  --bg-active: rgba(255, 255, 255, 0.1);
+  --bg-disabled: rgba(255, 255, 255, 0.03);
+
+  // Typography Colors
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0b0f19;
+
+  // Border Colors
+  --border-color: #1f293d;
+  --border-color-subtle: rgba(255, 255, 255, 0.07);
+  --border-color-focus: #6366f1;
+  --border-glass: rgba(255, 255, 255, 0.1);
+
+  // Palette Colors
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-active: #4338ca;
+  --primary-tonal: rgba(99, 102, 241, 0.16);
+  --primary-text: #ffffff;
+
+  --secondary: #64748b;
+  --secondary-hover: #94a3b8;
+  --secondary-active: #cbd5e1;
+  --secondary-tonal: rgba(100, 116, 139, 0.18);
+  --secondary-text: #ffffff;
+
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --accent-tonal: rgba(99, 102, 241, 0.18);
+
+  --success: #10b981;
+  --success-hover: #059669;
+  --success-tonal: rgba(16, 185, 129, 0.16);
+  --success-text: #ffffff;
+
+  --warning: #f59e0b;
+  --warning-hover: #d97706;
+  --warning-tonal: rgba(245, 158, 11, 0.16);
+  --warning-text: #ffffff;
+
+  --danger: #f43f5e;
+  --danger-hover: #e11d48;
+  --danger-tonal: rgba(244, 63, 94, 0.16);
+  --danger-text: #ffffff;
+
+  --info: #38bdf8;
+  --info-hover: #0ea5e9;
+  --info-tonal: rgba(56, 189, 248, 0.16);
+  --info-text: #ffffff;
+
+  --neutral: #94a3b8;
+  --neutral-hover: #cbd5e1;
+  --neutral-tonal: rgba(148, 163, 184, 0.14);
+  --neutral-text: #ffffff;
+
+  // Focus Ring
+  --ring-color: rgba(99, 102, 241, 0.35);
+
+  // Shadows
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.45), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.55), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.35);
+
+  // Component Overrides
+  --sidebar-bg: #111827;
+  --sidebar-text: #f8fafc;
+  --sidebar-active-bg: #6366f1;
+  --navbar-bg: #111827;
+  --table-striped: rgba(255, 255, 255, 0.02);
+  --table-hover: rgba(255, 255, 255, 0.04);
+  --table-header-bg: rgba(255, 255, 255, 0.03);
+}

@@ -1,0 +1,42 @@
+// ============================================================================
+// THEMES INDEX
+// Master theme selector mapping for data-theme attributes and utility classes
+// ============================================================================
+
+@use 'light' as *;
+@use 'dark' as *;
+@use 'solarized' as *;
+@use 'cyberpunk' as *;
+
+// Default Theme is Light
+:root {
+  @include theme-light-tokens;
+}
+
+// System Preference Dark Mode (if not explicitly set)
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include theme-dark-tokens;
+  }
+}
+
+// Explicit Data-Theme Attribute Selectors
+[data-theme='light'],
+.theme-light {
+  @include theme-light-tokens;
+}
+
+[data-theme='dark'],
+.theme-dark {
+  @include theme-dark-tokens;
+}
+
+[data-theme='solarized'],
+.theme-solarized {
+  @include theme-solarized-tokens;
+}
+
+[data-theme='cyberpunk'],
+.theme-cyberpunk {
+  @include theme-cyberpunk-tokens;
+}
