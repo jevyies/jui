@@ -11,7 +11,7 @@ export const navSections = [
     shortTitle: 'Architecture',
     icon: '❖',
     items: [
-      { path: '/overview', name: 'Theme & Overview', icon: '❖' }
+      { path: '/overview', name: 'Dashboard', icon: '❖' }
     ]
   },
   {

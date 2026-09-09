@@ -44,7 +44,6 @@ $breakpoints: (
   background: $bg;
   backdrop-filter: blur($blur) saturate(180%);
   -webkit-backdrop-filter: blur($blur) saturate(180%);
-  border: 1px solid $border;
 }
 
 @mixin focus-ring($color: var(--ring-color, rgba(99, 102, 241, 0.35)), $width: 3px, $offset: 0px) {

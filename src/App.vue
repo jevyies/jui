@@ -8,7 +8,7 @@ import ThemeCustomizer from './@core/components/ThemeCustomizer.vue'
 import JToastContainer from './@core/components/JToastContainer.vue'
 
 const route = useRoute()
-const { themes, layoutMode, setLayoutMode, currentTheme, selectTheme } = useLayout()
+const { themes, layoutMode, setLayoutMode, currentTheme, selectTheme, navbarMenuMode, setNavbarMenuMode } = useLayout()
 
 // Sidebar internal state
 const isSidebarCollapsed = ref(false)
@@ -75,15 +75,23 @@ watch(isMobileSidebarOpen, (isOpen) => {
         'main-wrapper flex-1 d-flex flex-column min-w-0 w-full',
         {
           'has-sidebar': layoutMode === 'sidebar',
-          'has-sidebar-collapsed': layoutMode === 'sidebar' && isSidebarCollapsed
+          'has-sidebar-collapsed': layoutMode === 'sidebar' && isSidebarCollapsed,
+          'has-menubar': layoutMode === 'navbar' && navbarMenuMode === 'menu-bar'
         }
       ]" style="max-width: 100%;">
         <!-- =================================================================== -->
         <!-- TOP NAVBAR COMPONENT                                                -->
         <!-- =================================================================== -->
-        <AppNavbar :layout-mode="layoutMode" :current-theme="currentTheme" :themes="themes"
-          v-model:mobile-sidebar-open="isMobileSidebarOpen" @set-layout-mode="setLayoutMode"
-          @select-theme="selectTheme" />
+        <AppNavbar
+          :layout-mode="layoutMode"
+          :navbar-menu-mode="navbarMenuMode"
+          :current-theme="currentTheme"
+          :themes="themes"
+          v-model:mobile-sidebar-open="isMobileSidebarOpen"
+          @set-layout-mode="setLayoutMode"
+          @set-navbar-menu-mode="setNavbarMenuMode"
+          @select-theme="selectTheme"
+        />
 
         <!-- =================================================================== -->
         <!-- MAIN PAGE CONTENT (RouterView)                                      -->

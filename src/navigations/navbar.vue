@@ -1,14 +1,19 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { navSections, isSectionActive, isItemActive, hasActiveChild } from './index'
+import { navSections } from './index'
 import AppLogo from '../@core/components/AppLogo.vue'
 import SidebarNavItem from './SidebarNavItem.vue'
+import NavbarNavList from './NavbarNavList.vue'
 
 const props = defineProps({
   layoutMode: {
     type: String,
     default: 'sidebar'
+  },
+  navbarMenuMode: {
+    type: String,
+    default: 'inline'
   },
   currentTheme: {
     type: String,
@@ -27,14 +32,13 @@ const props = defineProps({
 const emit = defineEmits([
   'update:mobileSidebarOpen',
   'setLayoutMode',
+  'setNavbarMenuMode',
   'selectTheme'
 ])
 
 const route = useRoute()
 
 // Dropdown & mobile state
-const activeNavbarDropdown = ref(null)
-const activeSubmenu = ref(null)
 const notificationOpen = ref(false)
 const themeDropdownOpen = ref(false)
 const isMobileNavOpen = ref(false)
@@ -42,38 +46,20 @@ const isMobileNavOpen = ref(false)
 // Close dropdowns on route changes
 watch(() => route.path, () => {
   isMobileNavOpen.value = false
-  activeNavbarDropdown.value = null
-  activeSubmenu.value = null
   notificationOpen.value = false
   themeDropdownOpen.value = false
 })
 
-const toggleNavbarDropdown = (name) => {
-  activeNavbarDropdown.value = activeNavbarDropdown.value === name ? null : name
-  activeSubmenu.value = null
-}
-
-const toggleSubmenu = (name) => {
-  activeSubmenu.value = activeSubmenu.value === name ? null : name
-}
-
 const closeAllDropdowns = () => {
-  activeNavbarDropdown.value = null
-  activeSubmenu.value = null
   notificationOpen.value = false
   themeDropdownOpen.value = false
 }
 
 // Global click listener to close dropdowns
 const handleDocumentClick = (e) => {
-  if (!e.target.closest('.navbar-dropdown') && !e.target.closest('.dropdown')) {
+  if (!e.target.closest('.dropdown')) {
     closeAllDropdowns()
   }
-}
-
-// Check if section is active using helper
-const checkSectionActive = (section) => {
-  return isSectionActive(section, route.path)
 }
 
 onMounted(() => {
@@ -86,7 +72,7 @@ onUnmounted(() => {
 
 const currentRouteTitle = computed(() => {
   const path = route.path.replace('/', '')
-  if (!path || path === 'index' || path === 'overview') return 'Theme & Overview'
+  if (!path || path === 'index' || path === 'overview') return 'Dashboard'
   return path.charAt(0).toUpperCase() + path.slice(1)
 })
 </script>
@@ -113,117 +99,20 @@ const currentRouteTitle = computed(() => {
         <span class="font-bold d-none d-xs-inline text-sm text-md-base">JUI Kit</span>
       </RouterLink>
 
-      <!-- Breadcrumbs (Desktop & Tablet) -->
-      <div v-if="layoutMode === 'sidebar'" class="d-none d-md-flex align-center gap-2 text-truncate">
+      <!-- Breadcrumbs (Desktop & Tablet: Sidebar mode OR Navbar Menu-Bar mode) -->
+      <div v-if="layoutMode === 'sidebar' || (layoutMode === 'navbar' && navbarMenuMode === 'menu-bar')"
+        class="d-none d-md-flex align-center gap-2 text-truncate">
         <span class="text-muted text-sm">Design System</span>
         <span class="text-muted">/</span>
         <span class="font-semibold text-sm text-capitalize text-truncate">{{ currentRouteTitle }}</span>
       </div>
 
       <!-- =============================================================== -->
-      <!-- NAVBAR HORIZONTAL MENUS (When Navbar Mode is active)            -->
+      <!-- NAVBAR HORIZONTAL MENUS (When Navbar Mode is active & INLINE)   -->
       <!-- =============================================================== -->
-      <nav v-if="layoutMode === 'navbar'" class="d-none d-lg-flex align-center gap-1 navbar-nav">
-        <template v-for="section in navSections" :key="section.id">
-          <!-- 1. Single Direct Link Section (e.g. Architecture / Overview) -->
-          <RouterLink v-if="section.items.length === 1 && !section.items[0].children" :to="section.items[0].path"
-            class="navbar-link" active-class="active">
-            <span>{{ section.items[0].icon || section.icon }}</span>
-            <span>{{ section.items[0].name.split(' ')[0] || section.shortTitle }}</span>
-          </RouterLink>
-
-          <!-- 2. Dropdown Menu Section (e.g. Components, Multi-Level, Apps, Blank Pages) -->
-          <div v-else class="navbar-dropdown">
-            <button :class="[
-              'navbar-dropdown-toggle',
-              {
-                'is-open': activeNavbarDropdown === section.id,
-                'has-active': checkSectionActive(section)
-              }
-            ]" @click.stop="toggleNavbarDropdown(section.id)">
-              <span>{{ section.icon }}</span>
-              <span>{{ section.shortTitle || section.title }}</span>
-              <span class="dropdown-arrow">▾</span>
-            </button>
-
-            <div :class="['dropdown-menu', { show: activeNavbarDropdown === section.id }]" style="min-width: 14.5rem;">
-              <div class="dropdown-header">{{ section.title }}</div>
-              <template v-for="item in section.items" :key="item.id || item.path || item.name">
-                <!-- Level 2 item with Level 3 children (Dropdown Submenu with Flyout) -->
-                <div v-if="item.children && item.children.length > 0" class="dropdown-submenu"
-                  @mouseenter="activeSubmenu = (item.id || item.name)" @mouseleave="activeSubmenu = null">
-                  <button type="button" :class="[
-                    'dropdown-item dropdown-submenu-toggle',
-                    {
-                      'has-active': hasActiveChild(item, route.path),
-                      'is-open': activeSubmenu === (item.id || item.name)
-                    }
-                  ]" @click.stop="toggleSubmenu(item.id || item.name)">
-                    <span>{{ item.icon || '📁' }}</span>
-                    <span class="flex-1 text-truncate">{{ item.name }}</span>
-                    <span v-if="item.badge" :class="['badge badge-xs me-1', item.badgeClass || 'badge-tonal-primary']">
-                      {{ item.badge }}
-                    </span>
-                    <span class="dropdown-submenu-arrow">›</span>
-                  </button>
-
-                  <!-- Level 3 Flyout Menu -->
-                  <div :class="[
-                    'dropdown-menu dropdown-submenu-menu',
-                    { show: activeSubmenu === (item.id || item.name) }
-                  ]" style="min-width: 14rem;">
-                    <div class="dropdown-header">{{ item.name }}</div>
-                    <template v-for="child in item.children" :key="child.id || child.path || child.name">
-                      <!-- Level 3 item with deeper children (if any) -->
-                      <div v-if="child.children && child.children.length > 0" class="dropdown-submenu"
-                        @mouseenter="activeSubmenu = (child.id || child.name)" @mouseleave="activeSubmenu = null">
-                        <button type="button" class="dropdown-item dropdown-submenu-toggle"
-                          @click.stop="toggleSubmenu(child.id || child.name)">
-                          <span>{{ child.icon || '📁' }}</span>
-                          <span class="flex-1 text-truncate">{{ child.name }}</span>
-                          <span class="dropdown-submenu-arrow">›</span>
-                        </button>
-                        <div :class="[
-                          'dropdown-menu dropdown-submenu-menu',
-                          { show: activeSubmenu === (child.id || child.name) }
-                        ]">
-                          <RouterLink v-for="sub in child.children" :key="sub.path" :to="sub.path" class="dropdown-item"
-                            active-class="active" @click="closeAllDropdowns">
-                            <span>{{ sub.icon || '❖' }}</span>
-                            <span class="flex-1 text-truncate">{{ sub.name }}</span>
-                            <span v-if="sub.badge" :class="['badge badge-xs', sub.badgeClass || 'badge-tonal-primary']">
-                              {{ sub.badge }}
-                            </span>
-                          </RouterLink>
-                        </div>
-                      </div>
-
-                      <!-- Standard Level 3 Direct Link -->
-                      <RouterLink v-else :to="child.path" class="dropdown-item" active-class="active"
-                        @click="closeAllDropdowns">
-                        <span>{{ child.icon || '❖' }}</span>
-                        <span class="flex-1 text-truncate">{{ child.name }}</span>
-                        <span v-if="child.badge" :class="['badge badge-xs', child.badgeClass || 'badge-tonal-primary']">
-                          {{ child.badge }}
-                        </span>
-                      </RouterLink>
-                    </template>
-                  </div>
-                </div>
-
-                <!-- Level 2 Direct Link -->
-                <RouterLink v-else :to="item.path" class="dropdown-item" active-class="active"
-                  @click="closeAllDropdowns">
-                  <span>{{ item.icon }}</span>
-                  <span class="flex-1 text-truncate">{{ item.name }}</span>
-                  <span v-if="item.badge" :class="['badge badge-xs', item.badgeClass || 'badge-tonal-primary']">
-                    {{ item.badge }}
-                  </span>
-                </RouterLink>
-              </template>
-            </div>
-          </div>
-        </template>
+      <nav v-if="layoutMode === 'navbar' && navbarMenuMode === 'inline'"
+        class="d-none d-lg-flex align-center gap-1 navbar-nav">
+        <NavbarNavList />
       </nav>
     </div>
 
@@ -252,6 +141,20 @@ const currentRouteTitle = computed(() => {
             </svg>
             <span class="d-none d-xl-inline text-xs font-semibold">Top Nav</span>
           </span>
+        </button>
+      </div>
+
+      <!-- 1b. Navbar Style Switcher (Inline vs Menu-Bar when in Navbar Mode) -->
+      <div v-if="layoutMode === 'navbar'"
+        class="d-none d-md-flex align-center p-1 rounded-full border border-subtle gap-1"
+        style="background: var(--bg-surface-tonal);" title="Top Navbar Menu Style">
+        <button :class="['btn btn-xs rounded-full', navbarMenuMode === 'inline' ? 'btn-primary' : 'btn-text']"
+          @click="emit('setNavbarMenuMode', 'inline')" title="Inline Navbar: Menu inside Top Header">
+          <span class="text-xs font-semibold">Inline</span>
+        </button>
+        <button :class="['btn btn-xs rounded-full', navbarMenuMode === 'menu-bar' ? 'btn-primary' : 'btn-text']"
+          @click="emit('setNavbarMenuMode', 'menu-bar')" title="Menu-Bar: Dedicated Sub-Navbar under Top Header">
+          <span class="text-xs font-semibold">Menu-Bar</span>
         </button>
       </div>
 
@@ -331,6 +234,18 @@ const currentRouteTitle = computed(() => {
       </button>
     </div>
   </header>
+
+  <!-- =============================================================== -->
+  <!-- DEDICATED MENU-BAR (When Navbar Mode is active & MENU-BAR)      -->
+  <!-- =============================================================== -->
+  <div v-if="layoutMode === 'navbar' && navbarMenuMode === 'menu-bar'"
+    class="navbar-menubar navbar-glass d-none d-lg-flex align-center">
+    <div class="menubar-container container-fluid px-4 py-2 w-full">
+      <nav class="d-flex align-center gap-1 navbar-nav">
+        <NavbarNavList />
+      </nav>
+    </div>
+  </div>
 
   <!-- MOBILE DRAWER MENU (For Navbar mode on mobile/tablet) -->
   <div v-if="layoutMode === 'navbar' && isMobileNavOpen" class="p-4 border-bottom border-subtle d-lg-none"

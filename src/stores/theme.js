@@ -34,9 +34,16 @@ export const useThemeStore = defineStore('theme', () => {
     return localStorage.getItem('jui_layout_mode') || themeConfig.layoutMode || 'navbar'
   }
 
+  // Resolve initial navbar menu mode ('inline' | 'menu-bar')
+  const resolveInitialNavbarMenuMode = () => {
+    if (typeof window === 'undefined') return 'inline'
+    return localStorage.getItem('jui_navbar_menu_mode') || themeConfig.navbarMenuMode || 'inline'
+  }
+
   // Reactive State in Pinia
   const currentTheme = ref(resolveInitialTheme())
   const layoutMode = ref(resolveInitialLayout())
+  const navbarMenuMode = ref(resolveInitialNavbarMenuMode())
   const themeMode = ref(typeof window !== 'undefined' ? (localStorage.getItem('jui_theme') || themeConfig.defaultTheme || 'system') : 'system')
   
   const colors = ref({
@@ -104,6 +111,8 @@ export const useThemeStore = defineStore('theme', () => {
   const isSystemTheme = computed(() => themeMode.value === 'system')
   const isNavbarMode = computed(() => layoutMode.value === 'navbar')
   const isSidebarMode = computed(() => layoutMode.value === 'sidebar')
+  const isNavbarInlineMode = computed(() => layoutMode.value === 'navbar' && navbarMenuMode.value === 'inline')
+  const isNavbarMenuBarMode = computed(() => layoutMode.value === 'navbar' && navbarMenuMode.value === 'menu-bar')
 
   // Synchronize CSS custom properties and DOM root attributes
   const applyThemeConfig = () => {
@@ -160,6 +169,14 @@ export const useThemeStore = defineStore('theme', () => {
     themeConfig.layoutMode = mode
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('jui_layout_mode', mode)
+    }
+  }
+
+  const setNavbarMenuMode = (mode) => {
+    navbarMenuMode.value = mode
+    themeConfig.navbarMenuMode = mode
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('jui_navbar_menu_mode', mode)
     }
   }
 
@@ -330,6 +347,7 @@ export const useThemeStore = defineStore('theme', () => {
     themes,
     currentTheme,
     layoutMode,
+    navbarMenuMode,
     themeMode,
     colors,
     inputPattern,
@@ -351,12 +369,15 @@ export const useThemeStore = defineStore('theme', () => {
     isSystemTheme,
     isNavbarMode,
     isSidebarMode,
+    isNavbarInlineMode,
+    isNavbarMenuBarMode,
 
     // Actions
     getSystemTheme,
     getModalStyleForTheme,
     selectTheme,
     setLayoutMode,
+    setNavbarMenuMode,
     setColor,
     resetColors,
     setInputPattern,

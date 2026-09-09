@@ -278,6 +278,17 @@ const items = ref([
 
 ---
 
+## 🧭 Navigation & Layout Architecture
+
+JUI supports flexible navigation layouts switchable at runtime with state persisted to `localStorage`:
+
+- **Fixed Sidebar Mode (`sidebar`)**: Traditional enterprise left navigation bar with 3-tier hierarchical accordion menus and collapsing support.
+- **Top Navbar Mode (`navbar`)**: Horizontal header navigation with two sub-styles:
+  - **Inline Navbar (`inline`, Default)**: All navigation menus and dropdowns are cleanly embedded inside the primary top header.
+  - **Menu-Bar (`menu-bar`)**: The menu is moved out of the top header into a dedicated sub-navbar directly below the top header, while the top header displays the logo, breadcrumb hierarchy, and global utility controls.
+
+---
+
 ## 🎨 Theme System & Design Tokens
 
 JUI features a token-driven SCSS engine with CSS variable roots. The entire system supports dynamic mode toggling:

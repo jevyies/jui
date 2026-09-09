@@ -84,7 +84,7 @@ if (!apiResponse.value) {
     <!-- ============================================================ -->
     <!-- HERO HEADER                                                  -->
     <!-- ============================================================ -->
-    <header class="ov-hero card">
+    <header class="ov-hero card card-bordered">
       <div class="d-flex flex-column flex-lg-row align-start align-lg-center justify-between gap-4">
         <div class="d-flex align-start gap-3">
           <AppLogo :width="46" :height="34" class="ov-hero__logo flex-shrink-0 mt-1" />
@@ -113,19 +113,19 @@ if (!apiResponse.value) {
 
       <!-- Key Stat Highlights -->
       <div class="ov-stats-grid mt-4 pt-3 border-top border-subtle">
-        <div class="ov-stat-item">
+        <div class="ov-stat-item ov-mode-card">
           <div class="ov-stat-value">25+</div>
           <div class="ov-stat-label">UI Components</div>
         </div>
-        <div class="ov-stat-item">
+        <div class="ov-stat-item ov-mode-card">
           <div class="ov-stat-value">5</div>
           <div class="ov-stat-label">Built-in Themes</div>
         </div>
-        <div class="ov-stat-item">
+        <div class="ov-stat-item ov-mode-card">
           <div class="ov-stat-value">2</div>
           <div class="ov-stat-label">Layout Modes</div>
         </div>
-        <div class="ov-stat-item">
+        <div class="ov-stat-item ov-mode-card">
           <div class="ov-stat-value">100%</div>
           <div class="ov-stat-label">Token Reactive</div>
         </div>
@@ -164,6 +164,28 @@ if (!apiResponse.value) {
                 <span class="font-semibold text-sm">Top Navbar</span>
                 <span class="text-xs text-muted">Horizontal header menu</span>
               </button>
+            </div>
+
+            <!-- Navbar Menu Style Sub-options (when Top Navbar is selected) -->
+            <div v-if="themeStore.layoutMode === 'navbar'" class="mt-3 p-3 rounded-lg border border-subtle" style="background: var(--bg-surface-tonal);">
+              <div class="d-flex align-center justify-between mb-2">
+                <span class="ov-section-label mb-0" style="font-size: 0.72rem;">Top Navbar Menu Style</span>
+                <span class="badge badge-xs badge-tonal-primary font-mono text-uppercase">{{ themeStore.navbarMenuMode }}</span>
+              </div>
+              <div class="d-grid grid-cols-2 gap-2">
+                <button
+                  :class="['btn btn-xs d-flex flex-column align-center py-2 px-2 text-center gap-1', themeStore.navbarMenuMode === 'inline' ? 'btn-primary' : 'btn-tonal-neutral']"
+                  @click="themeStore.setNavbarMenuMode('inline')">
+                  <span class="font-semibold text-xs">Inline Navbar</span>
+                  <span class="text-xs opacity-75" style="font-size: 0.7rem;">Menu inside header (default)</span>
+                </button>
+                <button
+                  :class="['btn btn-xs d-flex flex-column align-center py-2 px-2 text-center gap-1', themeStore.navbarMenuMode === 'menu-bar' ? 'btn-primary' : 'btn-tonal-neutral']"
+                  @click="themeStore.setNavbarMenuMode('menu-bar')">
+                  <span class="font-semibold text-xs">Menu-Bar</span>
+                  <span class="text-xs opacity-75" style="font-size: 0.7rem;">Dedicated sub-navbar</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -361,7 +383,6 @@ if (!apiResponse.value) {
 /* Hero Header */
 .ov-hero {
   padding: 1.75rem 2rem;
-  background: var(--bg-surface-elevated, var(--bg-surface));
   border: 1px solid var(--border-color-subtle, rgba(255, 255, 255, 0.08));
 }
 

@@ -25,6 +25,14 @@ export const themeConfig = {
   layoutMode: 'sidebar',
 
   // --------------------------------------------------------------------------
+  // 1b. TOP NAVBAR MENU ARRANGEMENT (When layoutMode is 'navbar')
+  // Options:
+  // - 'inline'   : Menu embedded inside top navbar (Default)
+  // - 'menu-bar' : Dedicated horizontal menu bar under the top navbar
+  // --------------------------------------------------------------------------
+  navbarMenuMode: 'inline',
+
+  // --------------------------------------------------------------------------
   // 2. DEFAULT ACTIVE THEME
   // Options:
   // - 'system'    : Automatically match user's device/OS light or dark theme

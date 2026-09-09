@@ -16,6 +16,7 @@ export function useLayout() {
   const {
     currentTheme,
     layoutMode,
+    navbarMenuMode,
     themeMode,
     colors,
     inputPattern,
@@ -35,6 +36,8 @@ export function useLayout() {
     isSystemTheme,
     isNavbarMode,
     isSidebarMode,
+    isNavbarInlineMode,
+    isNavbarMenuBarMode,
   } = storeToRefs(store)
 
   return {
@@ -42,6 +45,7 @@ export function useLayout() {
     themes,
     currentTheme,
     layoutMode,
+    navbarMenuMode,
     themeMode,
     colors,
     inputPattern,
@@ -61,7 +65,10 @@ export function useLayout() {
     isSystemTheme,
     isNavbarMode,
     isSidebarMode,
+    isNavbarInlineMode,
+    isNavbarMenuBarMode,
     setLayoutMode: store.setLayoutMode,
+    setNavbarMenuMode: store.setNavbarMenuMode,
     selectTheme: store.selectTheme,
     setColor: store.setColor,
     resetColors: store.resetColors,

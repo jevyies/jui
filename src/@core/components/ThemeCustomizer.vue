@@ -21,6 +21,8 @@ const {
   modalSize,
   modalBackdrop,
   setLayoutMode,
+  navbarMenuMode,
+  setNavbarMenuMode,
   selectTheme,
   setColor,
   setInputPattern,
@@ -242,6 +244,28 @@ onUnmounted(() => {
               <span class="font-semibold text-xs">{{ opt.name }}</span>
               <span class="text-xs text-muted" style="font-size: 0.7rem;">{{ opt.desc }}</span>
             </button>
+          </div>
+
+          <!-- Sub-option: Navbar Menu Style when Top Navbar is active -->
+          <div v-if="layoutMode === 'navbar'" class="mt-3 pt-3 border-top border-subtle">
+            <div class="d-flex align-center justify-between mb-2">
+              <span class="text-xs text-muted font-medium">Top Navbar Style</span>
+              <span class="badge badge-xs badge-tonal-primary font-mono text-uppercase">{{ navbarMenuMode }}</span>
+            </div>
+            <div class="d-grid grid-cols-2 gap-2">
+              <button
+                :class="['customizer-pill-btn', { active: navbarMenuMode === 'inline' }]"
+                @click="setNavbarMenuMode('inline')"
+              >
+                <span>Inline (Default)</span>
+              </button>
+              <button
+                :class="['customizer-pill-btn', { active: navbarMenuMode === 'menu-bar' }]"
+                @click="setNavbarMenuMode('menu-bar')"
+              >
+                <span>Menu-Bar</span>
+              </button>
+            </div>
           </div>
         </div>
 
