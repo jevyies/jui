@@ -2,11 +2,18 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { themeConfig } from '../theme.config'
 
+export const THEME_BACKGROUNDS = {
+  dark: '#0b0f19',
+  light: '#f8fafc',
+  solarized: '#002b36',
+  cyberpunk: '#08080f',
+}
+
 export const themes = [
-  { id: 'dark', name: 'Dark Mode', icon: '🌙', desc: 'Midnight zinc & violet' },
-  { id: 'light', name: 'Light Mode', icon: '☀️', desc: 'Clean slate & indigo' },
-  { id: 'solarized', name: 'Solarized', icon: '🪐', desc: 'Warm cyan & retro base' },
-  { id: 'cyberpunk', name: 'Cyberpunk', icon: '⚡', desc: 'Neon yellow & cyan' },
+  { id: 'dark', name: 'Dark Mode', icon: '🌙', desc: 'Midnight zinc & violet', bg: '#0b0f19' },
+  { id: 'light', name: 'Light Mode', icon: '☀️', desc: 'Clean slate & indigo', bg: '#f8fafc' },
+  { id: 'solarized', name: 'Solarized', icon: '🪐', desc: 'Warm cyan & retro base', bg: '#002b36' },
+  { id: 'cyberpunk', name: 'Cyberpunk', icon: '⚡', desc: 'Neon yellow & cyan', bg: '#08080f' },
 ]
 
 export const useThemeStore = defineStore('theme', () => {
@@ -20,12 +27,21 @@ export const useThemeStore = defineStore('theme', () => {
   const resolveInitialTheme = () => {
     if (typeof window === 'undefined') return 'dark'
     const storedTheme = localStorage.getItem('jui_theme')
-    if (storedTheme) return storedTheme
+    if (storedTheme && storedTheme !== 'system') return storedTheme
+    if (storedTheme === 'system') return getSystemTheme()
 
     if (!themeConfig.defaultTheme || themeConfig.defaultTheme === 'system') {
       return getSystemTheme()
     }
     return themeConfig.defaultTheme
+  }
+
+  // Helper to query theme background color
+  const getThemeBackground = (themeId = currentTheme.value) => {
+    if (themeId === 'system') {
+      return THEME_BACKGROUNDS[getSystemTheme()] || '#0b0f19'
+    }
+    return THEME_BACKGROUNDS[themeId] || '#0b0f19'
   }
 
   // Resolve initial layout mode
@@ -122,6 +138,15 @@ export const useThemeStore = defineStore('theme', () => {
     // 1. Set active data-theme
     doc.setAttribute('data-theme', currentTheme.value)
 
+    // Set background color and color-scheme to prevent white flash
+    const bg = THEME_BACKGROUNDS[currentTheme.value] || '#0b0f19'
+    doc.style.setProperty('--bg-body', bg)
+    doc.style.backgroundColor = bg
+    doc.style.colorScheme = currentTheme.value === 'light' ? 'light' : 'dark'
+    if (document.body) {
+      document.body.style.backgroundColor = bg
+    }
+
     // 2. Set palette overrides
     Object.entries(colors.value).forEach(([key, value]) => {
       if (value && value.trim() !== '') {
@@ -160,6 +185,9 @@ export const useThemeStore = defineStore('theme', () => {
 
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('jui_theme', themeId)
+      const bg = THEME_BACKGROUNDS[currentTheme.value] || '#0b0f19'
+      localStorage.setItem('jui_theme_bg', bg)
+      localStorage.setItem('jui_bg_color', bg)
     }
     applyThemeConfig()
   }
@@ -334,10 +362,27 @@ export const useThemeStore = defineStore('theme', () => {
         const storedTheme = localStorage.getItem('jui_theme')
         if (!storedTheme || storedTheme === 'system') {
           currentTheme.value = e.matches ? 'dark' : 'light'
+          if (typeof localStorage !== 'undefined') {
+            const bg = THEME_BACKGROUNDS[currentTheme.value] || '#0b0f19'
+            localStorage.setItem('jui_theme_bg', bg)
+            localStorage.setItem('jui_bg_color', bg)
+          }
           applyThemeConfig()
         }
       })
     }
+
+    // Persist current theme background to localStorage if not present
+    if (typeof localStorage !== 'undefined') {
+      const bg = THEME_BACKGROUNDS[currentTheme.value] || '#0b0f19'
+      if (!localStorage.getItem('jui_theme_bg')) {
+        localStorage.setItem('jui_theme_bg', bg)
+      }
+      if (!localStorage.getItem('jui_bg_color')) {
+        localStorage.setItem('jui_bg_color', bg)
+      }
+    }
+
     applyThemeConfig()
   }
 
@@ -345,6 +390,8 @@ export const useThemeStore = defineStore('theme', () => {
     // State
     themeConfig,
     themes,
+    THEME_BACKGROUNDS,
+    getThemeBackground,
     currentTheme,
     layoutMode,
     navbarMenuMode,

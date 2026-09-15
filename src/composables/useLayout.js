@@ -1,10 +1,10 @@
 import { storeToRefs } from 'pinia'
-import { useThemeStore, themes } from '../stores/theme'
+import { useThemeStore, themes, THEME_BACKGROUNDS } from '../stores/theme'
 import { themeConfig } from '../theme.config'
 
 import { useDisplay, useBreakpoints, useScreen, breakpoints } from './useDisplay'
 
-export { themes, themeConfig, useDisplay, useBreakpoints, useScreen, breakpoints }
+export { themes, THEME_BACKGROUNDS, themeConfig, useDisplay, useBreakpoints, useScreen, breakpoints }
 
 export function getSystemTheme() {
   if (typeof window === 'undefined') return 'dark'
@@ -87,6 +87,8 @@ export function useLayout() {
     setPagination: store.setPagination,
     resetAllDefaults: store.resetAllDefaults,
     applyThemeConfig: store.applyThemeConfig,
+    THEME_BACKGROUNDS,
+    getThemeBackground: store.getThemeBackground,
     getSystemTheme: store.getSystemTheme,
   }
 }

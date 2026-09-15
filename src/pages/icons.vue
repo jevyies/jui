@@ -47,75 +47,11 @@ const playgroundCssCode = computed(() => {
 // ----------------------------------------------------------------------------
 // 3. Complete Icon Library Definition
 // ----------------------------------------------------------------------------
-const categories = ['All', 'Navigation', 'Action', 'Arrows', 'Commerce', 'Media', 'System', 'Status']
+import { allIcons, categories } from '@/plugins/icons'
+
 const activeCategory = ref('All')
 const searchQuery = ref('')
 const catalogType = ref('solid') // 'solid' | 'outlined'
-
-const allIcons = [
-  // Navigation & General
-  { name: 'home', category: 'Navigation', tags: ['house', 'main', 'dashboard', 'root'] },
-  { name: 'search', category: 'Navigation', tags: ['find', 'magnifier', 'lookup', 'explore'] },
-  { name: 'bell', category: 'Navigation', tags: ['alert', 'notification', 'alarm', 'ring'] },
-  { name: 'gear', category: 'Navigation', tags: ['settings', 'cog', 'preferences', 'options'] },
-  { name: 'envelope', category: 'Navigation', tags: ['mail', 'message', 'email', 'inbox'] },
-  { name: 'user', category: 'Navigation', tags: ['profile', 'account', 'person', 'avatar'] },
-  { name: 'users', category: 'Navigation', tags: ['team', 'group', 'people', 'members'] },
-  { name: 'globe', category: 'Navigation', tags: ['world', 'earth', 'internet', 'web'] },
-
-  // Actions & Controls
-  { name: 'check', category: 'Action', tags: ['tick', 'confirm', 'success', 'done', 'ok'] },
-  { name: 'xmark', category: 'Action', tags: ['close', 'cross', 'cancel', 'delete', 'remove'] },
-  { name: 'plus', category: 'Action', tags: ['add', 'create', 'new', 'insert'] },
-  { name: 'minus', category: 'Action', tags: ['remove', 'subtract', 'decrease', 'collapse'] },
-  { name: 'trash', category: 'Action', tags: ['delete', 'remove', 'bin', 'garbage'] },
-  { name: 'pen', category: 'Action', tags: ['edit', 'write', 'pencil', 'modify'] },
-  { name: 'copy', category: 'Action', tags: ['duplicate', 'clipboard', 'clone'] },
-  { name: 'download', category: 'Action', tags: ['save', 'get', 'export', 'disk'] },
-  { name: 'upload', category: 'Action', tags: ['send', 'cloud', 'import'] },
-  { name: 'filter', category: 'Action', tags: ['funnel', 'sort', 'refine'] },
-  { name: 'share', category: 'Action', tags: ['social', 'forward', 'send'] },
-  { name: 'spinner', category: 'Action', tags: ['loading', 'progress', 'wait', 'busy'] },
-
-  // Arrows & Chevrons
-  { name: 'arrow-left', category: 'Arrows', tags: ['back', 'previous', 'direction', 'west'] },
-  { name: 'arrow-right', category: 'Arrows', tags: ['forward', 'next', 'direction', 'east'] },
-  { name: 'arrow-up', category: 'Arrows', tags: ['top', 'ascend', 'direction', 'north'] },
-  { name: 'arrow-down', category: 'Arrows', tags: ['bottom', 'descend', 'direction', 'south'] },
-  { name: 'chevron-left', category: 'Arrows', tags: ['previous', 'angle', 'caret'] },
-  { name: 'chevron-right', category: 'Arrows', tags: ['next', 'angle', 'caret'] },
-  { name: 'chevron-up', category: 'Arrows', tags: ['up', 'angle', 'caret', 'accordion'] },
-  { name: 'chevron-down', category: 'Arrows', tags: ['down', 'angle', 'caret', 'accordion'] },
-
-  // Commerce & Logistics
-  { name: 'truck', category: 'Commerce', tags: ['delivery', 'shipping', 'transport', 'vehicle', 'order'] },
-  { name: 'cart', category: 'Commerce', tags: ['shopping', 'store', 'basket', 'buy', 'checkout'] },
-  { name: 'credit-card', category: 'Commerce', tags: ['payment', 'billing', 'finance', 'visa', 'card'] },
-  { name: 'chart', category: 'Commerce', tags: ['analytics', 'metrics', 'graph', 'data', 'sales'] },
-
-  // Media & Content
-  { name: 'heart', category: 'Media', tags: ['like', 'favorite', 'love', 'wishlist'] },
-  { name: 'star', category: 'Media', tags: ['rating', 'favorite', 'bookmark', 'score'] },
-  { name: 'image', category: 'Media', tags: ['photo', 'picture', 'gallery', 'graphic'] },
-  { name: 'file', category: 'Media', tags: ['document', 'page', 'text', 'attachment'] },
-  { name: 'folder', category: 'Media', tags: ['directory', 'files', 'storage', 'project'] },
-  { name: 'calendar', category: 'Media', tags: ['date', 'schedule', 'event', 'month'] },
-  { name: 'clock', category: 'Media', tags: ['time', 'history', 'watch', 'duration'] },
-
-  // Security & System
-  { name: 'lock', category: 'System', tags: ['secure', 'password', 'protected', 'auth'] },
-  { name: 'unlock', category: 'System', tags: ['open', 'insecure', 'accessible'] },
-  { name: 'eye', category: 'System', tags: ['visible', 'view', 'show', 'preview'] },
-  { name: 'eye-slash', category: 'System', tags: ['hidden', 'hide', 'invisible', 'mask'] },
-  { name: 'sun', category: 'System', tags: ['light', 'brightness', 'day', 'mode'] },
-  { name: 'moon', category: 'System', tags: ['dark', 'night', 'theme', 'mode'] },
-
-  // Status & Feedback
-  { name: 'circle-info', category: 'Status', tags: ['information', 'help', 'details', 'notice'] },
-  { name: 'circle-check', category: 'Status', tags: ['success', 'valid', 'approved', 'pass'] },
-  { name: 'circle-xmark', category: 'Status', tags: ['error', 'failed', 'invalid', 'rejected'] },
-  { name: 'triangle-exclamation', category: 'Status', tags: ['warning', 'caution', 'alert', 'notice'] }
-]
 
 // Filtered icons computation
 const filteredIcons = computed(() => {
@@ -369,7 +305,10 @@ const recipeCode = `<!-- 1. Using Vue JIcon Component -->
       <div class="card-header p-4 border-bottom">
         <div class="d-flex flex-column flex-md-row align-start align-md-center justify-between gap-3">
           <div>
-            <h3 class="font-bold mb-1" style="font-size: 1.15rem;">Icon Catalog</h3>
+            <div class="d-flex align-center gap-2 mb-1">
+              <h3 class="font-bold mb-0" style="font-size: 1.15rem;">Icon Catalog</h3>
+              <span class="badge badge-tonal-primary badge-pill text-xs">{{ filteredIcons.length }} of {{ allIcons.length }}</span>
+            </div>
             <p class="text-secondary text-xs mb-0">
               Browse all vector icons in both solid and outlined variants. Click any icon to copy its component code.
             </p>
