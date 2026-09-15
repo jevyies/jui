@@ -1,0 +1,115 @@
+// ============================================================================
+// JUI ICONS COMPONENT STYLES
+// CSS Mask-based vector icon system
+// Inherits currentColor and scales with font-size (1em)
+// ============================================================================
+
+.jui {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor; /* inherits font color */
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  vertical-align: -0.125em;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+// Sizing Utilities
+.jui-xs { font-size: 0.75rem; }
+.jui-sm { font-size: 0.875rem; }
+.jui-md { font-size: 1rem; }
+.jui-lg { font-size: 1.25rem; }
+.jui-xl { font-size: 1.5rem; }
+.jui-2xl { font-size: 2rem; }
+.jui-3xl { font-size: 2.5rem; }
+.jui-4xl { font-size: 3rem; }
+
+// Animation Utilities
+.jui-spin {
+  animation: jui-spin 1s linear infinite;
+}
+
+@keyframes jui-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Icon Generator Mixin
+@mixin define-icon($name) {
+  .jui-#{$name},
+  .jui-#{$name}-solid {
+    mask-image: url('icons/solid/#{$name}.svg');
+    -webkit-mask-image: url('icons/solid/#{$name}.svg');
+  }
+
+  .jui-#{$name}-outlined {
+    mask-image: url('icons/outlined/#{$name}.svg');
+    -webkit-mask-image: url('icons/outlined/#{$name}.svg');
+  }
+}
+
+// Register all available icons
+$jui-icons: (
+  'arrow-down',
+  'arrow-left',
+  'arrow-right',
+  'arrow-up',
+  'bell',
+  'calendar',
+  'cart',
+  'chart',
+  'check',
+  'chevron-down',
+  'chevron-left',
+  'chevron-right',
+  'chevron-up',
+  'circle-check',
+  'circle-info',
+  'circle-xmark',
+  'clock',
+  'copy',
+  'credit-card',
+  'download',
+  'envelope',
+  'eye',
+  'eye-slash',
+  'file',
+  'filter',
+  'folder',
+  'gear',
+  'heart',
+  'home',
+  'image',
+  'lock',
+  'minus',
+  'moon',
+  'pen',
+  'plus',
+  'search',
+  'share',
+  'spinner',
+  'star',
+  'sun',
+  'trash',
+  'triangle-exclamation',
+  'truck',
+  'unlock',
+  'upload',
+  'user',
+  'users',
+  'xmark'
+);
+
+@each $icon in $jui-icons {
+  @include define-icon($icon);
+}

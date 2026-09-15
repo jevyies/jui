@@ -45,6 +45,7 @@ jui/
 │   │   │   ├── JCheckbox.vue      # Custom check inputs with indeterminate state
 │   │   │   ├── JDataTable.vue     # Enterprise table with sorting, search, pagination, selection
 │   │   │   ├── JDatePicker.vue    # Full-featured interactive date picker
+│   │   │   ├── JIcon.vue          # Vector mask icon component (solid & outlined variants)
 │   │   │   ├── JInput.vue         # Text input with prepend/append icons, clearable & validation
 │   │   │   ├── JModal.vue         # 9-point position dialogs & edge-docked offcanvas drawers
 │   │   │   ├── JPagination.vue    # Sized pagination controllers with quick jump
@@ -138,6 +139,9 @@ npm run lint
 
 # Format code with Prettier
 npm run format
+
+# Automatically sync newly added SVG icons into SCSS
+npm run icons:sync
 ```
 
 ---
@@ -275,6 +279,53 @@ const items = ref([
   />
 </template>
 ```
+
+### 5. Vector Icons (`<JIcon />`) & Adding New Icons
+
+JUI features a native vector icon system powered by CSS `mask-image`. Icons inherit their color from `currentColor`, scale proportionally with font sizes (`1em`), and support both `solid` and `outlined` styles.
+
+#### Component Usage
+
+```vue
+<script setup>
+import JIcon from '@core/components/JIcon.vue'
+</script>
+
+<template>
+  <!-- Solid variant (default) -->
+  <JIcon name="home" />
+
+  <!-- Outlined variant -->
+  <JIcon name="truck" type="outlined" />
+
+  <!-- Preset sizes and theme colors -->
+  <JIcon name="bell" size="lg" color="primary" />
+  <JIcon name="circle-check" size="2xl" color="success" />
+
+  <!-- Continuous spin animation -->
+  <JIcon name="spinner" spin />
+</template>
+```
+
+#### Adding & Syncing New Icons (Automatic 1-Command Sync)
+
+When you download or create new `.svg` icons, sync them automatically with a single command:
+
+1. **Place your SVG files** in the appropriate variant folders:
+   - Solid: `src/assets/icons/solid/[icon-name].svg`
+   - Outlined: `src/assets/icons/outlined/[icon-name].svg`
+
+2. **Run the sync command**:
+   ```sh
+   npm run icons:sync
+   ```
+   *This automatically scans both folders, registers all icons in `src/styles/components/_icons.scss`, and sets up root fallbacks.*
+
+3. **Use the new icon immediately** in your templates:
+   ```html
+   <JIcon name="[icon-name]" />
+   <JIcon name="[icon-name]" type="outlined" />
+   ```
 
 ---
 

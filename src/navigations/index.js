@@ -29,7 +29,8 @@ export const navSections = [
       { path: '/dividers', name: 'Dividers (HR & VR)', icon: '➖' },
       { path: '/modals', name: 'Modals & Drawers', icon: '🪟' },
       { path: '/toasts', name: 'Toasts & Notifications', icon: '🍞' },
-      { path: '/paginations', name: 'Paginations & Sizes', icon: '🔢' }
+      { path: '/paginations', name: 'Paginations & Sizes', icon: '' },
+      { path: '/icons', name: 'JUI Icons', icon: '📥' },
     ]
   },
   {
