@@ -82,21 +82,14 @@ watch(isMobileSidebarOpen, (isOpen) => {
         <!-- =================================================================== -->
         <!-- TOP NAVBAR COMPONENT                                                -->
         <!-- =================================================================== -->
-        <AppNavbar
-          :layout-mode="layoutMode"
-          :navbar-menu-mode="navbarMenuMode"
-          :current-theme="currentTheme"
-          :themes="themes"
-          v-model:mobile-sidebar-open="isMobileSidebarOpen"
-          @set-layout-mode="setLayoutMode"
-          @set-navbar-menu-mode="setNavbarMenuMode"
-          @select-theme="selectTheme"
-        />
+        <AppNavbar :layout-mode="layoutMode" :navbar-menu-mode="navbarMenuMode" :current-theme="currentTheme"
+          :themes="themes" v-model:mobile-sidebar-open="isMobileSidebarOpen" @set-layout-mode="setLayoutMode"
+          @set-navbar-menu-mode="setNavbarMenuMode" @select-theme="selectTheme" />
 
         <!-- =================================================================== -->
         <!-- MAIN PAGE CONTENT (RouterView)                                      -->
         <!-- =================================================================== -->
-        <main class="p-3 p-sm-4 p-md-6 flex-1 w-full" style="max-width: 100%; overflow-x: hidden;">
+        <main class="p-5 p-sm-4 p-md-6 flex-1 w-full" style="max-width: 100%; overflow-x: hidden;">
           <RouterView />
         </main>
       </div>
