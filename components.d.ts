@@ -13,6 +13,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppLogo: typeof import('./src/@core/components/AppLogo.vue')['default']
+    JAlert: typeof import('./src/@core/components/JAlert.vue')['default']
     JBtn: typeof import('./src/@core/components/JBtn.vue')['default']
     JCard: typeof import('./src/@core/components/JCard.vue')['default']
     JCheckbox: typeof import('./src/@core/components/JCheckbox.vue')['default']
@@ -39,6 +40,7 @@ declare module 'vue' {
 // For TSX support
 declare global {
   const AppLogo: typeof import('./src/@core/components/AppLogo.vue')['default']
+  const JAlert: typeof import('./src/@core/components/JAlert.vue')['default']
   const JBtn: typeof import('./src/@core/components/JBtn.vue')['default']
   const JCard: typeof import('./src/@core/components/JCard.vue')['default']
   const JCheckbox: typeof import('./src/@core/components/JCheckbox.vue')['default']

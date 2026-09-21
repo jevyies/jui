@@ -348,40 +348,38 @@ const snippetAlerts = `<!-- Solid / Tonal Alert Callouts -->
     <div class="card card-bordered p-4">
       <div class="d-flex align-center justify-between mb-3">
         <h4 class="mb-0">7. Alert & Notification Callouts</h4>
-        <code>.alert .alert-{color}</code>
+        <code>&lt;JAlert color="..." /&gt;</code>
       </div>
       <p class="text-xs text-secondary mb-3">System banners and notification callouts with icon, title, description, and dismiss actions.</p>
       
       <div class="d-flex flex-column gap-3">
         <!-- Success Alert -->
-        <div class="alert alert-success mb-0">
-          <div class="alert-icon">✓</div>
-          <div class="alert-content">
-            <div class="alert-title">Payment Settlement Complete</div>
-            <p class="mb-0 text-sm">Transaction #TX-9042 successfully processed and credited to your primary liquidity pool.</p>
-          </div>
-          <button class="alert-close" title="Dismiss">✕</button>
-        </div>
+        <JAlert
+          color="success"
+          title="Payment Settlement Complete"
+          message="Transaction #TX-9042 successfully processed and credited to your primary liquidity pool."
+          dismissible
+          class="mb-0"
+        />
 
         <!-- Warning Alert -->
-        <div class="alert alert-warning mb-0">
-          <div class="alert-icon">⚠️</div>
-          <div class="alert-content">
-            <div class="alert-title">API Rate Limit Threshold</div>
-            <p class="mb-0 text-sm">Your webhook endpoint reached 85% of monthly allocated quota. Consider scaling your plan.</p>
-          </div>
-          <button class="alert-close" title="Dismiss">✕</button>
-        </div>
+        <JAlert
+          color="warning"
+          title="API Rate Limit Threshold"
+          message="Your webhook endpoint reached 85% of monthly allocated quota. Consider scaling your plan."
+          dismissible
+          class="mb-0"
+        />
 
         <!-- Danger Alert (Outlined) -->
-        <div class="alert alert-outlined-danger mb-0">
-          <div class="alert-icon">✕</div>
-          <div class="alert-content">
-            <div class="alert-title">Authorization Declined</div>
-            <p class="mb-0 text-sm">Card issuer declined the transaction handshake. Contact support if the issue persists.</p>
-          </div>
-          <button class="alert-close" title="Dismiss">✕</button>
-        </div>
+        <JAlert
+          color="danger"
+          variant="outlined"
+          title="Authorization Declined"
+          message="Card issuer declined the transaction handshake. Contact support if the issue persists."
+          dismissible
+          class="mb-0"
+        />
       </div>
     </div>
 
